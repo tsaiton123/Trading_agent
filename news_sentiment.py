@@ -24,6 +24,20 @@ def get_news(stock_ticker, num_articles=20, api_key='YOUR_NEWSAPI_KEY'):
 
     return pd.DataFrame(news_list)
 
+def get_sentiment(stock_ticker):
+
+    api_key = '66824c56e5f54659ab9a92b6995c471f'  # Replace with your actual API key
+    stock_ticker = "AAPL"
+    news_df = get_news(stock_ticker, api_key=api_key)
+
+    classifier = pipeline("sentiment-analysis")
+    result = []
+    
+    for headline in news_df['headline']:
+        result.append(classifier(headline))
+
+    return result
+
 if __name__ == '__main__':
     # Example usage
     api_key = '66824c56e5f54659ab9a92b6995c471f'  # Replace with your actual API key
