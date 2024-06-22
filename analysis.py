@@ -10,7 +10,7 @@ def get_accerleration(stock_ticker):
 
     # Ensure we have enough data
     if len(data) < 10:
-        return "Not enough data to calculate acceleration."
+        return -1
     
     # Calculate velocity: change in price per minute
     velocity = data['Close'].diff()

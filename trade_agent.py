@@ -12,6 +12,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from tqdm import tqdm
 
 
 from news_sentiment import get_sentiment
@@ -76,10 +77,16 @@ if __name__ == '__main__':
 
     a = agent('John', 1000, {}, args.username, args.password, args.pin)
     # a.sentiment_analysis("AAPL")
-    
+
+    # init a dataframe with columns ['ticker', 'acceleration']
+    df = pd.DataFrame(columns=['ticker', 'acceleration'])
+
     tickers = get_tickers()
-    for ticker in tickers:
-        print(ticker)
-        print(a.momentum_strategy(ticker))
-        # a.sentiment_analysis(ticker)
-        # time.sleep(1)
+    for ticker in tqdm(tickers):
+        acc = float(get_accerleration(ticker))
+        df = df._append({'ticker': ticker, 'acceleration': acc}, ignore_index=True)
+
+    print(df)
+    # sort the dataframe by acceleration
+    df = df.sort_values(by='acceleration', ascending=False)
+    print(df)
