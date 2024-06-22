@@ -16,6 +16,7 @@ import matplotlib.dates as mdates
 
 from news_sentiment import get_sentiment
 from utils import *
+from analysis import *
 
 class agent:
 
@@ -54,6 +55,10 @@ class agent:
         sentiment = get_sentiment(stock_ticker)
         print(sentiment)
 
+    def momentum_strategy(self, stock_ticker):
+        acc = get_accerleration(stock_ticker)
+        print(acc)
+
 
     def __str__(self):
         return f'{self.name} has {self.cash} cash and {self.stocks} stocks'
@@ -70,7 +75,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     a = agent('John', 1000, {}, args.username, args.password, args.pin)
-    a.sentiment_analysis("AAPL")
+    # a.sentiment_analysis("AAPL")
     
-    best_stock = get_best_stock()
-    print(best_stock)
+    tickers = get_tickers()
+    for ticker in tickers:
+        print(ticker)
+        print(a.momentum_strategy(ticker))
+        # a.sentiment_analysis(ticker)
+        # time.sleep(1)
